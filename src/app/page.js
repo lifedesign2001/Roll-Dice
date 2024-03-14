@@ -106,6 +106,14 @@ export default function Home() {
     prepareDice();
   },[diceAmount]);
 
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then((registration) => console.log('scope is: ', registration.scope));
+    }
+  }, []);
+
   return (
     <main>
       <div className="max-w-[800px] p-4 mx-auto my-0">
