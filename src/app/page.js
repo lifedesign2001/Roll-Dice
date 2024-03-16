@@ -103,16 +103,16 @@ export default function Home() {
           document.getElementById('diceItem'+i).style.transform = "rotateX(180deg) rotateY(0deg)";
         } else if  (diceval == 2) {
           //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(-91deg) rotateY(1deg)"};
-          document.getElementById('diceItem'+i).style.transform = "rotateX(-90deg) rotateY(0deg)";
+          document.getElementById('diceItem'+i).style.transform = "rotateX(-90.1deg) rotateY(0.1deg)";
         } else if  (diceval == 5) {
           //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(91deg) rotateY(1deg)"};
-          document.getElementById('diceItem'+i).style.transform = "rotateX(90deg) rotateY(0deg)";
+          document.getElementById('diceItem'+i).style.transform = "rotateX(90.1deg) rotateY(0.1deg)";
         } else if  (diceval == 3) {
           //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(1deg) rotateY(91deg)"};
-          document.getElementById('diceItem'+i).style.transform = "rotateX(0deg) rotateY(90deg)";
+          document.getElementById('diceItem'+i).style.transform = "rotateX(0.1deg) rotateY(90.1deg)";
         } else if  (diceval == 4) {
           //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(1deg) rotateY(-91deg)"};
-          document.getElementById('diceItem'+i).style.transform = "rotateX(0deg) rotateY(-90deg)";
+          document.getElementById('diceItem'+i).style.transform = "rotateX(0.1deg) rotateY(-90.1deg)";
         }
 
         if (i == (diceList.length - 1)) {

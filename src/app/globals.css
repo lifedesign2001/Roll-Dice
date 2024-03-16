@@ -38,6 +38,8 @@ body {
   width: 100px;
   height: 100px;
   transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
   transition: 1s ease;
   display: inline-block;
   margin: 20px 20px;
@@ -98,9 +100,11 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid #f6f3f0;
   transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
   background: linear-gradient(145deg, #cccccc, #fff);
 }
 
@@ -109,10 +113,12 @@ body {
   content: '';
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   background: #f6f3f0;
   transform: translateZ(-1px);
   transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
 }
 
 .face::after {
@@ -125,6 +131,8 @@ body {
   border-radius: 50%;
   background: #131210;
   transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
 }
 
 .front {
