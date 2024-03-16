@@ -5,9 +5,10 @@ import React, { useState, useEffect } from 'react';
 
 function DiceItem(props) {
   const dice = props?.dice;
+  const diceItemId = 'diceItem'+dice.key
 
   return (
-      <div key={dice.key} data-key={dice.key} className={dice.className} style={dice.style}>
+      <div id={diceItemId} key={dice.key} data-diceval="1" className={dice.className} style={dice.style}>
         <div className="face front"></div>
         <div className="face back"></div>
         <div className="face top"></div>
@@ -37,15 +38,16 @@ export default function Home() {
     }
 
     setDiceTimeOut([]);
+    clearTimeout(timeOutResult);
   }
 
   function prepareDice()
   {
-    clearDiceTimeOut()
+    clearDiceTimeOut();
     setDiceList([]);
 
     let diceListTmp = [];
-    for (let i = 1; i <= diceAmount; i++) {
+    for (let i = 0; i < diceAmount; i++) {
       let dice = [];
       dice.key = i;
       dice.className = 'dice val1';
@@ -55,7 +57,7 @@ export default function Home() {
     }
     setDiceList(diceListTmp);
     setRollResultClass(defaultRollResultClass+' opacity-0');
-    setRollResultVal(0);
+    //setRollResultVal(0);
   }
 
   function handleDiceAmount(e) {
@@ -64,10 +66,12 @@ export default function Home() {
 
   function handleRoll()
   {
+    clearDiceTimeOut();
+
     let lastIndex = 0;
 
     let tmpDiceList = JSON.parse(JSON.stringify(diceList));
-    setDiceList([]);
+    //setDiceList([]);
     setRollResultClass(defaultRollResultClass+' opacity-0');
     setTimeOutResult(0);
 
@@ -86,39 +90,48 @@ export default function Home() {
       let animateRandom = Math.floor((Math.random() * 9) + 1);
       //console.log(diceItem);
 
-      let dice = [];
-      dice.key = i+1;
+      //let dice = [];
+      //dice.key = i+1;
       //dice.className = 'dice val'+diceRandom;
-      dice.className = 'dice';
       //dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s", "transitionDelay" : 2+(i/100)+"s"};
-      dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s"};
-      newDiceList.push(<DiceItem key={i} dice={dice} />);
+      //dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s"};
+      //newDiceList.push(<DiceItem key={i} dice={dice} />);
+
+      document.getElementById('diceItem'+i).classList.remove('val1','val2','val3','val4','val5','val6');
+      document.getElementById('diceItem'+i).style.animation = "rolling"+animateRandom+" 2s linear ."+i+"s";
+      document.getElementById('diceItem'+i).dataset.diceval = diceRandom;
 
       diceTimeOut[i] = setTimeout(() => {
-        if (diceRandom == 1) {
-          dice.style = { "transform" : "rotateX(0deg) rotateY(0deg)"};
-        } else if  (diceRandom == 6) {
-          dice.style = { "transform" : "rotateX(180deg) rotateY(0deg)"};
-        } else if  (diceRandom == 2) {
-          dice.style = { "transform" : "rotateX(-91deg) rotateY(1deg)"};
-        } else if  (diceRandom == 5) {
-          dice.style = { "transform" : "rotateX(91deg) rotateY(1deg)"};
-        } else if  (diceRandom == 3) {
-          dice.style = { "transform" : "rotateX(1deg) rotateY(91deg)"};
-        } else if  (diceRandom == 4) {
-          dice.style = { "transform" : "rotateX(1deg) rotateY(-91deg)"};
-        }
         
-      }, 3000 + i*100);
+        var diceval = document.getElementById('diceItem'+i).dataset.diceval;
+        document.getElementById('diceItem'+i).classList.add('val'+diceval);
+        /*if (diceRandom == 1) {
+          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(0deg) rotateY(0deg)"};
+        } else if  (diceRandom == 6) {
+          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(180deg) rotateY(0deg)"};
+        } else if  (diceRandom == 2) {
+          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(-91deg) rotateY(1deg)"};
+        } else if  (diceRandom == 5) {
+          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(91deg) rotateY(1deg)"};
+        } else if  (diceRandom == 3) {
+          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(1deg) rotateY(91deg)"};
+        } else if  (diceRandom == 4) {
+          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(1deg) rotateY(-91deg)"};
+        }*/
+        
+      }, 2050 + i*100);
     }
 
-    setDiceList(newDiceList);
+    //setDiceList(newDiceList);
 
-    setTimeout(() => {
+    var tmpResultTimeout = setTimeout(() => {
       setRollResultVal(new_rollResultVal);
       setRollResultClass(defaultRollResultClass+' opacity-1');
       setDiceTimeOut([]);
+      clearTimeout(timeOutResult);
     }, (lastIndex*100) + 3000);
+
+    setTimeOutResult(tmpResultTimeout);
   }
 
   useEffect(() => {
