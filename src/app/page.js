@@ -21,22 +21,23 @@ function DiceItem(props) {
 
 export default function Home() {
 
-  const defaultRollResultClass = 'text-center text-5xl font-semibold transition-opacity duration-300';
+  const defaultRollResultClass = 'mt-2 text-center text-5xl font-semibold transition-opacity duration-300';
 
   const [diceList, setDiceList] = useState([]);
   const [diceAmount, setDiceAmount] = useState(1);
   const [rollResultVal, setRollResultVal] = useState(0);
-  const [rollResultClass, setRollResultClass] = useState(defaultRollResultClass+' opacity-0');
+  const [rollResultClass, setRollResultClass] = useState(defaultRollResultClass+' opacity-0 delay-0');
   
   const [diceTimeOut, setDiceTimeOut] = useState([]);
   const [timeOutResult, setTimeOutResult] = useState(0);
 
   function clearDiceTimeOut()
   {
+    console.log(diceTimeOut);
     for (var i=0; i<diceTimeOut.length; i++) {
-        clearTimeout(diceTimeOut[i]);
+      //console.log('a'+i);
+      clearTimeout(diceTimeOut[i]);
     }
-
     setDiceTimeOut([]);
     clearTimeout(timeOutResult);
   }
@@ -56,7 +57,7 @@ export default function Home() {
       diceListTmp.push(<DiceItem key={i} dice={dice} />);
     }
     setDiceList(diceListTmp);
-    setRollResultClass(defaultRollResultClass+' opacity-0');
+    setRollResultClass(defaultRollResultClass+' opacity-0 delay-0');
     //setRollResultVal(0);
   }
 
@@ -70,16 +71,14 @@ export default function Home() {
 
     let lastIndex = 0;
 
-    let tmpDiceList = JSON.parse(JSON.stringify(diceList));
     //setDiceList([]);
-    setRollResultClass(defaultRollResultClass+' opacity-0');
+    setRollResultClass(defaultRollResultClass+' opacity-0 delay-0');
     setTimeOutResult(0);
 
-    let newDiceList = [];
     let diceRandom = 0;
     let new_rollResultVal = 0;
 
-    for (const [i, diceItem] of tmpDiceList.entries()) {
+    for (const [i, diceItem] of diceList.entries()) {
 
       lastIndex = i;
 
@@ -90,13 +89,6 @@ export default function Home() {
       let animateRandom = Math.floor((Math.random() * 9) + 1);
       //console.log(diceItem);
 
-      //let dice = [];
-      //dice.key = i+1;
-      //dice.className = 'dice val'+diceRandom;
-      //dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s", "transitionDelay" : 2+(i/100)+"s"};
-      //dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s"};
-      //newDiceList.push(<DiceItem key={i} dice={dice} />);
-
       document.getElementById('diceItem'+i).classList.remove('val1','val2','val3','val4','val5','val6');
       document.getElementById('diceItem'+i).style.animation = "rolling"+animateRandom+" 2s linear ."+i+"s";
       document.getElementById('diceItem'+i).dataset.diceval = diceRandom;
@@ -104,34 +96,50 @@ export default function Home() {
       diceTimeOut[i] = setTimeout(() => {
         
         var diceval = document.getElementById('diceItem'+i).dataset.diceval;
-        document.getElementById('diceItem'+i).classList.add('val'+diceval);
-        /*if (diceRandom == 1) {
-          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(0deg) rotateY(0deg)"};
-        } else if  (diceRandom == 6) {
-          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(180deg) rotateY(0deg)"};
-        } else if  (diceRandom == 2) {
-          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(-91deg) rotateY(1deg)"};
-        } else if  (diceRandom == 5) {
-          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(91deg) rotateY(1deg)"};
-        } else if  (diceRandom == 3) {
-          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(1deg) rotateY(91deg)"};
-        } else if  (diceRandom == 4) {
-          document.getElementById('diceItem'+i).style = { "transform" : "rotateX(1deg) rotateY(-91deg)"};
-        }*/
+        //document.getElementById('diceItem'+i).classList.add('val'+diceval);
+        if (diceval == 1) {
+          //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(0deg) rotateY(0deg)"};
+          document.getElementById('diceItem'+i).style.transform = "rotateX(0deg) rotateY(0deg)";
+        } else if  (diceval == 6) {
+          //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(180deg) rotateY(0deg)"};
+          document.getElementById('diceItem'+i).style.transform = "rotateX(180deg) rotateY(0deg)";
+        } else if  (diceval == 2) {
+          //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(-91deg) rotateY(1deg)"};
+          document.getElementById('diceItem'+i).style.transform = "rotateX(-91deg) rotateY(1deg)";
+        } else if  (diceval == 5) {
+          //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(91deg) rotateY(1deg)"};
+          document.getElementById('diceItem'+i).style.transform = "rotateX(91deg) rotateY(1deg)";
+        } else if  (diceval == 3) {
+          //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(1deg) rotateY(91deg)"};
+          document.getElementById('diceItem'+i).style.transform = "rotateX(1deg) rotateY(91deg)";
+        } else if  (diceval == 4) {
+          //document.getElementById('diceItem'+i).style = { "transform" : "rotateX(1deg) rotateY(-91deg)"};
+          document.getElementById('diceItem'+i).style.transform = "rotateX(1deg) rotateY(-91deg)";
+        }
+
+        if (i == (diceList.length - 1)) {
+          setRollResultVal(new_rollResultVal);
+          setRollResultClass(defaultRollResultClass+' opacity-1 delay-1000');
+          clearDiceTimeOut();
+        }
         
       }, 2050 + i*100);
     }
 
+    setDiceTimeOut(diceTimeOut);
+
+    //console.log(diceList.length);
+
     //setDiceList(newDiceList);
 
-    var tmpResultTimeout = setTimeout(() => {
+    /*var tmpResultTimeout = setTimeout(() => {
       setRollResultVal(new_rollResultVal);
       setRollResultClass(defaultRollResultClass+' opacity-1');
+      clearDiceTimeOut();
       setDiceTimeOut([]);
-      clearTimeout(timeOutResult);
     }, (lastIndex*100) + 3000);
 
-    setTimeOutResult(tmpResultTimeout);
+    setTimeOutResult(tmpResultTimeout);*/
   }
 
   useEffect(() => {
