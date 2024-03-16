@@ -89,8 +89,26 @@ export default function Home() {
       let dice = [];
       dice.key = i+1;
       dice.className = 'dice val'+diceRandom;
-      dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s", "transitionDelay" : 2+(i/100)+"s"};
+      //dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s", "transitionDelay" : 2+(i/100)+"s"};
+      dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s"};
       newDiceList.push(<DiceItem key={i} dice={dice} />);
+
+      diceTimeOut[i] = setTimeout(() => {
+        if (diceRandom == 1) {
+          dice.style = { "transform" : "rotateX(0deg) rotateY(0deg)"};
+        } else if  (diceRandom == 6) {
+          dice.style = { "transform" : "rotateX(180deg) rotateY(0deg)"};
+        } else if  (diceRandom == 2) {
+          dice.style = { "transform" : "rotateX(-91deg) rotateY(1deg)"};
+        } else if  (diceRandom == 5) {
+          dice.style = { "transform" : "rotateX(91deg) rotateY(1deg)"};
+        } else if  (diceRandom == 3) {
+          dice.style = { "transform" : "rotateX(1deg) rotateY(91deg)"};
+        } else if  (diceRandom == 4) {
+          dice.style = { "transform" : "rotateX(1deg) rotateY(-91deg)"};
+        }
+        
+      }, 3000 + i*100);
     }
 
     setDiceList(newDiceList);
@@ -98,6 +116,7 @@ export default function Home() {
     setTimeout(() => {
       setRollResultVal(new_rollResultVal);
       setRollResultClass(defaultRollResultClass+' opacity-1');
+      setDiceTimeOut([]);
     }, (lastIndex*100) + 3000);
   }
 
