@@ -88,7 +88,8 @@ export default function Home() {
 
       let dice = [];
       dice.key = i+1;
-      dice.className = 'dice val'+diceRandom;
+      //dice.className = 'dice val'+diceRandom;
+      dice.className = 'dice';
       //dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s", "transitionDelay" : 2+(i/100)+"s"};
       dice.style = { "animation" : "rolling"+animateRandom+" 2s linear ."+i+"s"};
       newDiceList.push(<DiceItem key={i} dice={dice} />);
