@@ -33,9 +33,7 @@ export default function Home() {
 
   function clearDiceTimeOut()
   {
-    console.log(diceTimeOut);
     for (var i=0; i<diceTimeOut.length; i++) {
-      //console.log('a'+i);
       clearTimeout(diceTimeOut[i]);
     }
     setDiceTimeOut([]);
@@ -51,7 +49,7 @@ export default function Home() {
     for (let i = 0; i < diceAmount; i++) {
       let dice = [];
       dice.key = i;
-      dice.className = 'dice val1';
+      dice.className = 'dice';
       dice.style = {};
       //console.log(dice);
       diceListTmp.push(<DiceItem key={i} dice={dice} />);
